@@ -6,7 +6,7 @@
     line: "PermitRootLogin no"
     state: present
     backrefs: yes
-  notify: restart ssh
+  notify: reload ssh
 
 - name: (SSH) Allow authentication with RSA keys
   lineinfile:
@@ -15,7 +15,7 @@
     line: "RSAAuthentication yes"
     state: present
     backrefs: yes
-  notify: restart ssh
+  notify: reload ssh
 
 - name: (SSH) Allow authentication with public keys
   lineinfile:
@@ -24,7 +24,7 @@
     line: "PubkeyAuthentication yes"
     state: present
     backrefs: yes
-  notify: restart ssh
+  notify: reload ssh
 
 - name: (SSH) Disable password authentication
   lineinfile:
@@ -33,7 +33,7 @@
     line: "PasswordAuthentication no"
     state: present
     backrefs: yes
-  notify: restart ssh
+  notify: reload ssh
 
 - name: (SSH) Enforce SSHv2
   lineinfile:
@@ -42,7 +42,7 @@
     line: "Protocol 2"
     state: present
     backrefs: yes
-  notify: restart ssh
+  notify: reload ssh
 
 - name: (SSH) Disable DSA host key
   lineinfile:
@@ -50,7 +50,7 @@
     regexp: '^HostKey /etc/ssh/ssh_host_dsa_key'
     state: absent
     backrefs: yes
-  notify: restart ssh
+  notify: reload ssh
 
 - name: (SSH) Disable ECDSA host key
   lineinfile:
@@ -58,7 +58,7 @@
     regexp: '^HostKey /etc/ssh/ssh_host_ecdsa_key'
     state: absent
     backrefs: yes
-  notify: restart ssh
+  notify: reload ssh
 
 - name: (SSH) Hardening of SSH service
   blockinfile:
@@ -78,7 +78,7 @@
     state: present
     line: "HostKey /etc/ssh/ssh_host_ed25519_key"
     backrefs: yes
-  notify: restart ssh
+  notify: reload ssh
 
 - name: (SSH) Enable RSA host key
   lineinfile:
@@ -87,4 +87,4 @@
     state: present
     line: "HostKey /etc/ssh/ssh_host_rsa_key"
     backrefs: yes
-  notify: restart ssh
+  notify: reload ssh
