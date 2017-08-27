@@ -1,0 +1,90 @@
+---
+- name: (SSH) Disable root login
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PermitRootLogin'
+    line: "PermitRootLogin no"
+    state: present
+    backrefs: yes
+  notify: restart ssh
+
+- name: (SSH) Allow authentication with RSA keys
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?RSAAuthentication'
+    line: "RSAAuthentication yes"
+    state: present
+    backrefs: yes
+  notify: restart ssh
+
+- name: (SSH) Allow authentication with public keys
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PubkeyAuthentication'
+    line: "PubkeyAuthentication yes"
+    state: present
+    backrefs: yes
+  notify: restart ssh
+
+- name: (SSH) Disable password authentication
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PasswordAuthentication'
+    line: "PasswordAuthentication no"
+    state: present
+    backrefs: yes
+  notify: restart ssh
+
+- name: (SSH) Enforce SSHv2
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?Protocol'
+    line: "Protocol 2"
+    state: present
+    backrefs: yes
+  notify: restart ssh
+
+- name: (SSH) Disable DSA host key
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^HostKey /etc/ssh/ssh_host_dsa_key'
+    state: absent
+    backrefs: yes
+  notify: restart ssh
+
+- name: (SSH) Disable ECDSA host key
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^HostKey /etc/ssh/ssh_host_ecdsa_key'
+    state: absent
+    backrefs: yes
+  notify: restart ssh
+
+- name: (SSH) Hardening of SSH service
+  blockinfile:
+    path: /etc/ssh/sshd_config
+    marker: "# {mark} SSH Hardening"
+    state: present
+    insertafter: EOF
+    block: |
+      KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
+      Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+      MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-ripemd160-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160,umac-128@openssh.com
+
+- name: (SSH) Enable ED25519 host key
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#HostKey /etc/ssh/ssh_host_ed25519_key'
+    state: present
+    line: "HostKey /etc/ssh/ssh_host_ed25519_key"
+    backrefs: yes
+  notify: restart ssh
+
+- name: (SSH) Enable RSA host key
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#HostKey /etc/ssh/ssh_host_rsa_key'
+    state: present
+    line: "HostKey /etc/ssh/ssh_host_rsa_key"
+    backrefs: yes
+  notify: restart ssh
