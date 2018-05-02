@@ -4,4 +4,4 @@
 
 # Setup Google Authenticator 2FA for SSH
 - include_tasks: google-authenticator.yml
-  when: 2fa == "google-authenticator"
+  when: mfa == "google-authenticator"

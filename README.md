@@ -29,7 +29,7 @@ The only variable for this role is to enable two-factor authentication. By defau
 Here is the default configuration of the variable:
 
 ```
-2fa: none
+mfa: none
 ```
 
 If you want to enable 2FA, you can use the value **google-authenticator** and it will be enabled (although, not enforced).

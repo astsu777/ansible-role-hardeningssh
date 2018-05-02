@@ -2,4 +2,4 @@
 # Default variables for this role
 
 # Define if 2FA should be configured or not
-2fa: none
+mfa: none
