@@ -4,3 +4,6 @@
 # Define if 2FA should be configured or not
 # Possible values: none,google-authenticator
 mfa: none
+
+# Authorized SSH users
+allowed_ssh_users: root

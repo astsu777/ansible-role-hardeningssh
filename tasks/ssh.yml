@@ -88,3 +88,10 @@
     line: "HostKey /etc/ssh/ssh_host_rsa_key"
     backrefs: yes
   notify: reload ssh
+
+- name: (SSH) Limit users allowed to use SSH
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    state: present
+    line: "AllowUsers {{ allowed_ssh_users }}"
+  notify: reload ssh

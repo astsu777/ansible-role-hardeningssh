@@ -24,12 +24,13 @@ It is required to have a user able to login via SSH with a public/private key pa
 Role Variables
 --------------
 
-The only variable for this role is to enable two-factor authentication. By default, 2FA is disabled.
+Two variables for this role: one is to determine which multi-factor authentication method (called **mfa**) and the other one limits the SSH connection to certain users (called **alloed_ssh_users**). By default, 2FA is disabled.
 
 Here is the default configuration of the variable:
 
 ```
 mfa: none
+allowed_ssh_users: johndoe
 ```
 
 If you want to enable 2FA, you can use the value **google-authenticator** and it will be enabled (although, not enforced).
