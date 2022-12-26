@@ -23,6 +23,7 @@
     insertafter: EOF
     block: |
       auth required pam_google_authenticator.so nullok
+      auth required pam_permit.so
   notify: reload ssh
 
 - name: (SSH - 2FA-GA) Configure SSHD Service For 2FA
